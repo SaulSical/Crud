@@ -1,17 +1,17 @@
-package persistence.entity;
+package org.datacoins.kinvana.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 @Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @ToString
-    @EqualsAndHashCode
+
     private Integer codigoCLiente;
     @Column
     private String nombre;
