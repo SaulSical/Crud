@@ -158,7 +158,7 @@ public class KinvanaApplication implements CommandLineRunner {
 							salir = true;
 						}
 
-			default -> logger.info("Opcion no validad");
+			default -> logger.info("Opcion no validad por hoy");
 		}
 		return salir;
 	}
