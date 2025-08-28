@@ -14,7 +14,7 @@ import org.datacoins.kinvana.persistence.entity.Cliente;
 import java.util.List;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class KinvanaApplication implements CommandLineRunner {
 
 	//inyeccion de dependencias
@@ -158,7 +158,7 @@ public class KinvanaApplication implements CommandLineRunner {
 							salir = true;
 						}
 
-			default -> logger.info("Opcion no validad");
+			default -> logger.info("Opcion no validad por hoy");
 		}
 		return salir;
 	}
