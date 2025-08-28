@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Kinavana 2024422</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
+    </h:head>
+    <h:body>
+        <p>Hola mundo, estoy en server faces, desde spring boot</p>
+        <div class="card">
+            <h:form id="formulario-clientes">
+                <!--                    Mensaje emergente-->
+                <p:growl id="mensaje_emergente" showDetails="true"/>
+                <!--                    Barra de menus-->
+                <div class="card">
+                    <p:menubar>
+                        <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
+                                    update=":formulario-clientes:tabla-clientes"
+                                    actionListener="#{indexController.cargarDatos}"/>
+
+                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
+                                    actionListener="#{indexController.agregarCliente}"
+                                    update=":formulario-modal:ventana-cliente"
+                                    oncomplete="PF('VentanaModalCliente').show()"/>
+                    </p:menubar>
+                </div>
+                <!--                    Tabla de datos-->
+                <div class="card">
+                    <p:dataTable values="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
+                        <!--Encabezado-->
+                        <f:facet name="header">
+                            <div class="flex justify-content-center
+                                            flex-wrap card-container yellow-container">
+                                <div class="flex aling-items-center
+                                                justify-content-center
+                                                w-20rem h-4rem
+                                                bg-yellow-500 font-bold
+                                                text-gray-900 border-round m-2">
+                                    <h3>Kinvana, clientes</h3>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <!--Todas las columnas-->
+                        <p:column headerText="ID">
+                            <h:outputText value="#{cliente.codigoCliente}"/>
+                        </p:column>
+                        <p:column headerText="NOMBRE">
+                            <h:outputText value="#{cliente.nombre}"/>
+                        </p:column>
+                        <p:column headerText="APELLIDO">
+                            <h:outputText value="#{cliente.apellido}"/>
+                        </p:column>
+                        <p:column headerText="TELEFONO">
+                            <h:outputText value="#{cliente.telefono}"/>
+                        </p:column>
+                        <p:column headerText="CORREO">
+                            <h:outputText value="#{cliente.correo}"/>
+                        </p:column>
+                        <p:column headerText="GENERO">
+                            <h:outputText value="#{cliente.genero}"/>
+                        </p:column>
+                        <p:column headerText="EDAD">
+                            <h:outputText value="#{cliente.edad}"/>
+                        </p:column>
+                        <p:column headerText="OPCION"></p:column>
+                        <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary">
+                        </p:commandButton>
+                        <p:commandButton value="Eliminar" icon=""></p:commandButton>
+                    </p:dataTable>
+                </div>
+            </h:form>
+
+            <h:form id="formulario-modal">
+                <p:dialog header="Detalle del cliente" showEffect="fade"
+                            modal="true" widgetVar="VentanaModalCliente" responsive="true">
+                    <p:outputPanel id="ventana-cliente" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="nombre">NOMBRE</p:outputLabel>
+                            <p:inputText id="nombre" requiered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
+                            <p:inputText id="apellido" requiered="false"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="telefono">TELEFONO</p:outputLabel>
+                            <p:inputText id="telefono" requiered="false"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="correo">CORREO</p:outputLabel>
+                            <p:inputText id="correo" requiered="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="genero">GENERO</p:outputLabel>
+                            <p:inputText id="genero" requiered="false"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="edad">EDAD</p:outputLabel>
+                            <p:inputText id="edad" requiered="true"/>
+                        </div>
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" class="ui-button-primary"/>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secundary"
+                                onClick="PF('VentanaModalCliente').hide()" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+            </h:form>
+
+        </div>
+
+    </h:body>
+
+</h:html>
+
