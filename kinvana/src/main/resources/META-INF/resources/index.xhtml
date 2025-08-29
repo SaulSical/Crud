@@ -12,9 +12,9 @@
         <p>Hola mundo, estoy en server faces, desde spring boot</p>
         <div class="card">
             <h:form id="formulario-clientes">
-                <!--                    Mensaje emergente-->
+                <!-- Mensaje emergente -->
                 <p:growl id="mensaje_emergente" showDetails="true"/>
-                <!--                    Barra de menus-->
+                <!-- Barra de menus -->
                 <div class="card">
                     <p:menubar>
                         <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
@@ -27,23 +27,18 @@
                                     oncomplete="PF('VentanaModalCliente').show()"/>
                     </p:menubar>
                 </div>
-                <!--                    Tabla de datos-->
+                <!-- Tabla de datos -->
                 <div class="card">
                     <p:dataTable value="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
-                        <!--Encabezado-->
+                        <!-- Encabezado -->
                         <f:facet name="header">
-                            <div class="flex justify-content-center
-                                            flex-wrap card-container yellow-container">
-                                <div class="flex aling-items-center
-                                                justify-content-center
-                                                w-20rem h-4rem
-                                                bg-yellow-500 font-bold
-                                                text-gray-900 border-round m-2">
+                            <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                                <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">
                                     <h3>Kinvana, clientes</h3>
                                 </div>
                             </div>
                         </f:facet>
-                        <!--Todas las columnas-->
+                        <!-- Todas las columnas -->
                         <p:column headerText="ID">
                             <h:outputText value="#{cliente.codigoCliente}"/>
                         </p:column>
@@ -66,57 +61,84 @@
                             <h:outputText value="#{cliente.edad}"/>
                         </p:column>
                         <p:column headerText="OPCION">
-                        <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary">
-                        </p:commandButton>
-                        <p:commandButton value="Eliminar" icon="pi pi-trash" class="ui button-danger">
-                        </p:commandButton>
+                            <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary"
+                                             update="formulario-modal:ventana-cliente"
+                                             process="@this" style="margin-right: 5rem"
+                                             oncomplete="PF('VentanaModalCliente').show()">
+                                <f:setPropertyActionListener value="#{cliente}"
+                                                             target="#{indexController.clienteSeleccionado}"/>
+                                <p:resetInput target=":formulario-modal:ventana-cliente"/>
+                            </p:commandButton>
+                            <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                             class="ui-button-danger"
+                                             process="@this"
+                                             oncomplete="PF('VentanaEliminarcliente').show()" >
+                                <f:setPropertyActionListener value="#{cliente}"
+                                                             target="#{indexController.clienteSeleccionado}" />
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
-
                 </div>
             </h:form>
 
             <h:form id="formulario-modal">
                 <p:dialog header="Detalle del cliente" showEffect="fade"
-                            modal="true" widgetVar="VentanaModalCliente" responsive="true">
+                          modal="true" widgetVar="VentanaModalCliente" responsive="true">
                     <p:outputPanel id="ventana-cliente" class="ui-fluid">
                         <div class="field">
                             <p:outputLabel for="nombre">NOMBRE</p:outputLabel>
-                            <p:inputText id="nombre" requiered="true"/>
+                            <p:inputText id="nombre" required="true"
+                                         value="#{indexController.clienteSeleccionado.nombre}"/>
                         </div>
                         <div class="field">
                             <p:outputLabel for="apellido">Apellido</p:outputLabel>
-                            <p:inputText id="apellido" requiered="false"/>
+                            <p:inputText id="apellido" required="false"
+                                         value="#{indexController.clienteSeleccionado.apellido}"/>
                         </div>
                         <div class="field">
                             <p:outputLabel for="telefono">TELEFONO</p:outputLabel>
-                            <p:inputText id="telefono" requiered="false"/>
+                            <p:inputText id="telefono" required="false"
+                                         value="#{indexController.clienteSeleccionado.telefono}"/>
                         </div>
                         <div class="field">
                             <p:outputLabel for="correo">CORREO</p:outputLabel>
-                            <p:inputText id="correo" requiered="true"/>
+                            <p:inputText id="correo" required="true"
+                                         value="#{indexController.clienteSeleccionado.correo}"/>
                         </div>
                         <div class="field">
                             <p:outputLabel for="genero">GENERO</p:outputLabel>
-                            <p:inputText id="genero" requiered="false"/>
+                            <p:inputText id="genero" required="false"
+                                         value="#{indexController.clienteSeleccionado.genero}"/>
                         </div>
                         <div class="field">
                             <p:outputLabel for="edad">EDAD</p:outputLabel>
-                            <p:inputText id="edad" requiered="true"/>
+                            <p:inputText id="edad" required="true"
+                                         value="#{indexController.clienteSeleccionado.edad}"/>
                         </div>
                     </p:outputPanel>
                     <f:facet name="footer">
-                        <p:commandButton value="Guardar" icon="pi pi-check" class="ui-button-primary"/>
-                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secundary"
-                                onClick="PF('VentanaModalCliente').hide()" type="button"/>
+                        <p:commandButton value="Guardar" icon="pi pi-check"
+                                         class="ui-button-primary"
+                                         process="ventana-cliente @this"
+                                         actionListener="#{indexController.guardarCliente}"/>
+
+                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
+                                         onclick="PF('VentanaModalCliente').hide()" type="button"/>
                     </f:facet>
                 </p:dialog>
+                <p:confirmDialog widgetVar="VentanaEliminarcliente" showEffect="fade"
+                                 width="300" message="Desea Elimibar el cliente?"
+                                 header="Confirme su seleccion" severity="warn">
+                    <p:commandButton value="SI" icon="pi pi-check" class="ui-button-primary"
+                                     process="@this"
+                                     actionListener="#{indexController.eliminarCliente}"
+                                     oncomplete="PF('VentanaEliminarcliente').hide()"/>
 
+                    <p:commandButton value="NO" icon="pi pi-times" class="ui-button-warning"
+                                     onclick="PF('VentanaEliminarcliente').hide()"
+                                     type="button"/>
+                </p:confirmDialog>
             </h:form>
-
         </div>
-
     </h:body>
-
 </h:html>
-
