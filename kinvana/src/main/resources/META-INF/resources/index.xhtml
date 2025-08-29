@@ -29,7 +29,7 @@
                 </div>
                 <!--                    Tabla de datos-->
                 <div class="card">
-                    <p:dataTable values="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
+                    <p:dataTable value="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
                         <!--Encabezado-->
                         <f:facet name="header">
                             <div class="flex justify-content-center
@@ -65,11 +65,14 @@
                         <p:column headerText="EDAD">
                             <h:outputText value="#{cliente.edad}"/>
                         </p:column>
-                        <p:column headerText="OPCION"></p:column>
+                        <p:column headerText="OPCION">
                         <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary">
                         </p:commandButton>
-                        <p:commandButton value="Eliminar" icon=""></p:commandButton>
+                        <p:commandButton value="Eliminar" icon="pi pi-trash" class="ui button-danger">
+                        </p:commandButton>
+                        </p:column>
                     </p:dataTable>
+
                 </div>
             </h:form>
 
