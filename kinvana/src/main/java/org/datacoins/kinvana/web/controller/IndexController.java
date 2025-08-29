@@ -34,7 +34,17 @@ public class IndexController {
     }
 
     public void agregarCliente(){
+
         this.clienteSeleccionado = new Cliente();
+    }
+
+    public void guardarCliente(){
+        logger.info("Cliente a guardar: "+this.clienteSeleccionado);
+    }
+
+    public void eliminarCliente(){
+
+
     }
 
 }
